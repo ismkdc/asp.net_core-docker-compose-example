@@ -1,12 +1,13 @@
 version: '3'
 services:
   example_app:
+    image: ismkdc/example_app
     build: .
     ports:
      - "8181:80"
-  example_app.redis:
-    image: redis
-  example_app.mariadb:
+  example_app-redis:
+    image: redis:alpine
+  example_app-mariadb:
     image: mariadb
-  example_app.nginx:
+  example_app-nginx:
     image: nginx
