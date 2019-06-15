@@ -5,9 +5,22 @@ services:
     build: .
     ports:
      - "8181:80"
+    environment:
+      - VIRTUAL_HOST=app.ismailkundakci.com
   example_app-redis:
     image: redis:alpine
   example_app-mariadb:
     image: mariadb
-  example_app-nginx:
-    image: nginx
+    volumes:
+     - ${PWD}/mariadb:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: changeme
+      MYSQL_DATABASE: mybb
+      MYSQL_USER: mybb
+      MYSQL_PASSWORD: changeme
+  example_app-proxy:
+    image: jwilder/nginx-proxy
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
